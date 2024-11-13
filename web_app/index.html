@@ -154,6 +154,22 @@
         }
 
         function submitForm() {
+    const formData = {
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        interests: document.getElementById('interests').value,
+        about: document.getElementById('about').value
+    };
+
+    if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+        Telegram.WebApp.sendData(JSON.stringify(formData));
+    } else {
+        alert('Telegram WebApp is not available. Please open this page through Telegram.');
+    }
+}
+
+        function submitForm() {
             const formData = {
                 name: document.getElementById('name').value,
                 age: document.getElementById('age').value,
