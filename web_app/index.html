@@ -60,6 +60,37 @@
                 color: #888;
             }
 
+        .gender-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+            .gender-group label {
+                display: inline-block;
+                margin: 0;
+                cursor: pointer;
+            }
+
+            .gender-group input {
+                display: none;
+            }
+
+            .gender-group label {
+                padding: 10px 20px;
+                background: #2c2c2c;
+                border-radius: 5px;
+                border: 1px solid #444;
+                text-align: center;
+                width: 48%;
+            }
+
+            .gender-group input:checked + label {
+                background: #007bff;
+                color: #fff;
+                border: 1px solid #0056b3;
+            }
+
         .btn-continue {
             width: 100%;
             padding: 12px;
@@ -105,27 +136,34 @@
                 <label for="city">Your city</label>
                 <input type="text" id="city" placeholder="Enter your city" required>
             </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="gender-group">
+                    <input type="radio" id="male" name="gender" value="Male" required>
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="Female">
+                    <label for="female">Female</label>
+                </div>
+            </div>
             <button type="button" class="btn-continue" onclick="nextStep(2)">Continue</button>
         </div>
 
         <!-- Step 2: Social Media Links -->
         <div id="step2" class="step">
-            <h1>For Moderating</h1>
-            <p style="color: #888;">Min 1 field required</p>
             <div class="form-group">
                 <label for="instagram">Instagram</label>
                 <input type="text" id="instagram" placeholder="instagram.com/">
                 <p style="color: #888; font-size: 0.9em;">Instagram profile must be public.</p>
             </div>
             <div class="form-group">
-                <label for="linkedin">LinkedIn</label>
-                <input type="text" id="linkedin" placeholder="linkedin.com/">
-                <p style="color: #888; font-size: 0.9em;">LinkedIn must be public.</p>
+                <label for="onlyfans">OnlyFans</label>
+                <input type="text" id="onlyfans" placeholder="onlyfans.com/">
+                <p style="color: #888; font-size: 0.9em;">OnlyFans profile must be public.</p>
             </div>
             <div class="form-group">
-                <label for="motivation">Motivation Letter</label>
-                <textarea id="motivation" placeholder="Explain why you should be part of the community."></textarea>
-                <p style="color: #888; font-size: 0.9em;">Motivation letter won't be on your profile.</p>
+                <label for="twitter">Twitter</label>
+                <input type="text" id="twitter" placeholder="twitter.com/">
+                <p style="color: #888; font-size: 0.9em;">Twitter profile must be public.</p>
             </div>
             <button type="button" class="btn-continue" onclick="submitForm()">Continue</button>
         </div>
@@ -163,9 +201,10 @@
                 name: document.getElementById('name').value,
                 birthdate: document.getElementById('birthdate').value,
                 city: document.getElementById('city').value,
+                gender: document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '',
                 instagram: document.getElementById('instagram').value,
-                linkedin: document.getElementById('linkedin').value,
-                motivation: document.getElementById('motivation').value
+                onlyfans: document.getElementById('onlyfans').value,
+                twitter: document.getElementById('twitter').value
             };
 
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
