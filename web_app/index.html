@@ -114,6 +114,31 @@
             .step.active {
                 display: block;
             }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2c2c2c;
+            border: 2px dashed #444;
+            border-radius: 5px;
+            width: 100%;
+            height: 150px;
+            cursor: pointer;
+            color: #888;
+            text-align: center;
+        }
+
+            .photo-upload input {
+                display: none;
+            }
     </style>
 </head>
 <body>
@@ -153,17 +178,35 @@
             <div class="form-group">
                 <label for="instagram">Instagram</label>
                 <input type="text" id="instagram" placeholder="instagram.com/">
-                <p style="color: #888; font-size: 0.9em;">Instagram profile must be public.</p>
             </div>
             <div class="form-group">
                 <label for="onlyfans">OnlyFans</label>
                 <input type="text" id="onlyfans" placeholder="onlyfans.com/">
-                <p style="color: #888; font-size: 0.9em;">OnlyFans profile must be public.</p>
             </div>
             <div class="form-group">
                 <label for="twitter">Twitter</label>
                 <input type="text" id="twitter" placeholder="twitter.com/">
-                <p style="color: #888; font-size: 0.9em;">Twitter profile must be public.</p>
+            </div>
+            <button type="button" class="btn-continue" onclick="nextStep(3)">Continue</button>
+        </div>
+
+        <!-- Step 3: Add Photos -->
+        <div id="step3" class="step">
+            <h1>Add Profile Photos</h1>
+            <p style="color: #888;">You must add 3 photos to continue.</p>
+            <div class="photo-grid">
+                <label class="photo-upload">
+                    <span>+</span>
+                    <input type="file" accept="image/*" onchange="handleFileUpload(this)">
+                </label>
+                <label class="photo-upload">
+                    <span>+</span>
+                    <input type="file" accept="image/*" onchange="handleFileUpload(this)">
+                </label>
+                <label class="photo-upload">
+                    <span>+</span>
+                    <input type="file" accept="image/*" onchange="handleFileUpload(this)">
+                </label>
             </div>
             <button type="button" class="btn-continue" onclick="submitForm()">Continue</button>
         </div>
@@ -191,9 +234,23 @@
         }
 
         function updateProgress(step) {
-            const totalSteps = 2;
+            const totalSteps = 3;
             const progress = (step / totalSteps) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    input.parentElement.style.backgroundImage = `url(${e.target.result})`;
+                    input.parentElement.style.backgroundSize = 'cover';
+                    input.parentElement.style.backgroundPosition = 'center';
+                    input.parentElement.querySelector('span').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         function submitForm() {
@@ -205,6 +262,7 @@
                 instagram: document.getElementById('instagram').value,
                 onlyfans: document.getElementById('onlyfans').value,
                 twitter: document.getElementById('twitter').value
+                // Add logic for photo uploads if needed
             };
 
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
