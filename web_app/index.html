@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Registration WebApp</title>
+    <title>Dating App Registration</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
             max-width: 400px;
             margin: auto;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -48,7 +48,7 @@
     </style>
 </head>
 <body>
-    <h1>Interactive Registration</h1>
+    <h1>Dating App Registration</h1>
     <div id="step1" class="step active">
         <label for="name">Name:</label>
         <input type="text" id="name" placeholder="Enter your name" required>
@@ -75,15 +75,15 @@
     </div>
 
     <div id="step4" class="step">
-        <label for="city">City:</label>
-        <input type="text" id="city" placeholder="Enter your city" required>
+        <label for="interests">Interests (comma-separated):</label>
+        <input type="text" id="interests" placeholder="e.g., Sports, Music, Travel">
         <button onclick="prevStep(3)">Back</button>
         <button onclick="nextStep(5)">Next</button>
     </div>
 
     <div id="step5" class="step">
-        <label for="about">About:</label>
-        <textarea id="about" placeholder="Tell us something about yourself"></textarea>
+        <label for="about">About You:</label>
+        <textarea id="about" placeholder="Tell us about yourself"></textarea>
         <button onclick="prevStep(4)">Back</button>
         <button onclick="submitForm()">Submit</button>
     </div>
@@ -103,7 +103,7 @@
                 name: document.getElementById('name').value,
                 age: document.getElementById('age').value,
                 gender: document.getElementById('gender').value,
-                city: document.getElementById('city').value,
+                interests: document.getElementById('interests').value,
                 about: document.getElementById('about').value
             };
 
