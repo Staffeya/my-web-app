@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dating App Registration</title>
+    <title>Fun Registration</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,6 +13,22 @@
             background-color: #f9f9f9;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: #007bff;
+            transition: width 0.3s;
         }
 
         .step {
@@ -41,14 +57,14 @@
             button:hover {
                 background-color: #0056b3;
             }
-
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <h1>Dating App Registration</h1>
+    <h1>Interactive Registration</h1>
+    <div class="progress-bar">
+        <div class="progress-bar-fill" id="progress"></div>
+    </div>
+
     <div id="step1" class="step active">
         <label for="name">Name:</label>
         <input type="text" id="name" placeholder="Enter your name" required>
@@ -75,8 +91,8 @@
     </div>
 
     <div id="step4" class="step">
-        <label for="interests">Interests (comma-separated):</label>
-        <input type="text" id="interests" placeholder="e.g., Sports, Music, Travel">
+        <label for="interests">Interests:</label>
+        <input type="text" id="interests" placeholder="Enter your interests">
         <button onclick="prevStep(3)">Back</button>
         <button onclick="nextStep(5)">Next</button>
     </div>
@@ -88,14 +104,25 @@
         <button onclick="submitForm()">Submit</button>
     </div>
 
-    <script>function nextStep(step) {
+    <script>
+        let currentStep = 1;
+
+        function nextStep(step) {
             document.querySelector('.step.active').classList.remove('active');
             document.getElementById('step' + step).classList.add('active');
+            updateProgress(step);
         }
 
         function prevStep(step) {
             document.querySelector('.step.active').classList.remove('active');
             document.getElementById('step' + step).classList.add('active');
+            updateProgress(step);
+        }
+
+        function updateProgress(step) {
+            const totalSteps = 5;
+            const progress = (step / totalSteps) * 100;
+            document.getElementById('progress').style.width = progress + '%';
         }
 
         function submitForm() {
@@ -107,17 +134,12 @@
                 about: document.getElementById('about').value
             };
 
-            // Отправка данных обратно в Telegram
             if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
                 Telegram.WebApp.sendData(JSON.stringify(formData));
             } else {
                 alert('Telegram WebApp is not available. Please open this page through Telegram.');
             }
         }
-
-        // Telegram WebApp initialization
-        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-            Telegram.WebApp.ready();
-        }</script>
+    </script>
 </body>
 </html>
