@@ -85,11 +85,30 @@
                 display: block;
             }
 
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 5px;
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
         }
+
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2c2c2c;
+            border: 2px dashed #444;
+            border-radius: 5px;
+            width: 100%;
+            height: 150px;
+            cursor: pointer;
+            color: #888;
+            text-align: center;
+        }
+
+            .photo-upload input {
+                display: none;
+            }
     </style>
 </head>
 <body>
@@ -103,7 +122,7 @@
         <!-- Step 1: Select Language -->
         <div id="step1" class="step active">
             <div class="form-group">
-                <label for="language-select" id="language-label">Choose Language</label>
+                <label for="language-select">Choose Language</label>
                 <select id="language-select" onchange="changeLanguage()">
                     <option value="en">English</option>
                     <option value="ru">Русский</option>
@@ -116,45 +135,41 @@
         <!-- Step 2: General Information -->
         <div id="step2" class="step">
             <div class="form-group">
-                <label for="name" id="name-label">Name</label>
+                <label for="name">Name</label>
                 <input type="text" id="name" placeholder="Enter your name" required>
-                <div id="name-error" class="error-message"></div>
             </div>
             <div class="form-group">
-                <label for="birthdate" id="birthdate-label">Date of birth</label>
+                <label for="birthdate">Date of birth</label>
                 <input type="date" id="birthdate" required>
-                <div id="birthdate-error" class="error-message"></div>
             </div>
             <div class="form-group">
-                <label for="city" id="city-label">Your city</label>
+                <label for="city">Your city</label>
                 <input type="text" id="city" placeholder="Enter your city" required>
-                <div id="city-error" class="error-message"></div>
             </div>
             <div class="form-group">
-                <label id="gender-label">Gender</label>
+                <label>Gender</label>
                 <div class="gender-group">
                     <input type="radio" id="male" name="gender" value="Male" required>
-                    <label for="male" id="male-label">Male</label>
+                    <label for="male">Male</label>
                     <input type="radio" id="female" name="gender" value="Female">
-                    <label for="female" id="female-label">Female</label>
+                    <label for="female">Female</label>
                 </div>
-                <div id="gender-error" class="error-message"></div>
             </div>
             <button type="button" class="btn-continue" onclick="nextStep(3)">Continue</button>
         </div>
 
-        <!-- Step 3: Social Media Links (Optional) -->
+        <!-- Step 3: Social Media Links -->
         <div id="step3" class="step">
             <div class="form-group">
-                <label for="instagram" id="instagram-label">Instagram</label>
+                <label for="instagram">Instagram</label>
                 <input type="text" id="instagram" placeholder="instagram.com/">
             </div>
             <div class="form-group">
-                <label for="onlyfans" id="onlyfans-label">OnlyFans</label>
+                <label for="onlyfans">OnlyFans</label>
                 <input type="text" id="onlyfans" placeholder="onlyfans.com/">
             </div>
             <div class="form-group">
-                <label for="twitter" id="twitter-label">Twitter</label>
+                <label for="twitter">Twitter</label>
                 <input type="text" id="twitter" placeholder="twitter.com/">
             </div>
             <button type="button" class="btn-continue" onclick="nextStep(4)">Continue</button>
@@ -162,8 +177,8 @@
 
         <!-- Step 4: Add Photos -->
         <div id="step4" class="step">
-            <h1 id="add-photos-title">Add Profile Photos</h1>
-            <p id="add-photos-description" style="color: #888;">You must add 3 photos to continue.</p>
+            <h1>Add Profile Photos</h1>
+            <p style="color: #888;">You must add 3 photos to continue.</p>
             <div class="photo-grid">
                 <label class="photo-upload">
                     <span>+</span>
@@ -223,10 +238,6 @@
             }
         }
 
-        // Load default language
-        loadTranslations(currentLanguage);
-
-        // Check if all required fields are filled before proceeding to next step
         function nextStep(step) {
             let valid = true;
 
@@ -237,43 +248,21 @@
                 const city = document.getElementById('city').value;
                 const gender = document.querySelector('input[name="gender"]:checked');
 
-                // Reset errors
-                document.getElementById('name-error').textContent = '';
-                document.getElementById('birthdate-error').textContent = '';
-                document.getElementById('city-error').textContent = '';
-                document.getElementById('gender-error').textContent = '';
-
-                // Validate each field
-                if (!name) {
-                    document.getElementById('name-error').textContent = 'Name is required.';
-                    valid = false;
-                }
-                if (!birthdate) {
-                    document.getElementById('birthdate-error').textContent = 'Date of birth is required.';
-                    valid = false;
-                }
-                if (!city) {
-                    document.getElementById('city-error').textContent = 'City is required.';
-                    valid = false;
-                }
-                if (!gender) {
-                    document.getElementById('gender-error').textContent = 'Please select your gender.';
+                if (!name || !birthdate || !city || !gender) {
+                    alert("Please fill out all fields before proceeding.");
                     valid = false;
                 }
             }
 
             // Step 4 validations (Add Photos)
             if (step === 4) {
-                const photoInputs = document.querySelectorAll('.photo-upload input[type="file"]');
-                const validFiles = Array.from(photoInputs).every(input => input.files.length > 0);
-
-                if (!validFiles) {
-                    alert("Please upload all 3 photos.");
+                const photos = document.querySelectorAll('.photo-upload input[type="file"]');
+                if (photos.length < 3 || [...photos].some(photo => !photo.files.length)) {
+                    alert("You must add 3 photos before submitting.");
                     valid = false;
                 }
             }
 
-            // Proceed to next step if all fields are valid
             if (valid) {
                 const activeStep = document.querySelector('.step.active');
                 if (activeStep) {
@@ -290,8 +279,6 @@
                 } else {
                     console.error('Next step not found: ', step);
                 }
-            } else {
-                console.log("Please fill out all required fields.");
             }
         }
 
@@ -342,6 +329,9 @@
                 alert('Telegram WebApp is not available. Please open this page through Telegram.');
             }
         }
+
+        // Load default language
+        loadTranslations(currentLanguage);
     </script>
 </body>
 </html>
