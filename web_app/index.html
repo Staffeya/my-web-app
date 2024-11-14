@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration with Progress Bar</title>
+    <title>Multi-Step Registration with Progress Bar</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -14,71 +14,171 @@
             max-width: 400px;
             margin: auto;
         }
-        /* Existing styles... */
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #444;
+            border-radius: 10px;
+            height: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #007bff;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #bbb;
+        }
+
+        input[type="text"], input[type="date"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            background: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: #f5f5f5;
+        }
+
+            input::placeholder, textarea::placeholder {
+                color: #888;
+            }
+
+        .btn-continue {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+            .btn-continue:hover {
+                background: #0056b3;
+            }
+
+        .step {
+            display: none;
+        }
+
+            .step.active {
+                display: block;
+            }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2c2c2c;
+            border: 2px dashed #444;
+            border-radius: 5px;
+            width: 100%;
+            height: 150px;
+            cursor: pointer;
+            color: #888;
+            text-align: center;
+        }
+
+            .photo-upload input {
+                display: none;
+            }
     </style>
 </head>
 <body>
-    <div>
-        <label for="language-select" id="choose-language-label">Choose Language</label>
-        <select id="language-select" onchange="changeLanguage()">
-            <option value="en">English</option>
-            <option value="ru">Русский</option>
-            <option value="lv">Latviešu</option>
-        </select>
-    </div>
-
+    <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
-    <h1 id="title">Create Profile</h1>
+
+    <h1 id="step-title">Select Language</h1>
     <form id="registrationForm">
-        <!-- Step 1 -->
+        <!-- Step 1: Select Language -->
         <div id="step1" class="step active">
             <div class="form-group">
-                <label for="name" id="label-name">Name</label>
+                <label for="language-select">Choose Language</label>
+                <select id="language-select" onchange="changeLanguage()">
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                    <option value="lv">Latviešu</option>
+                </select>
+            </div>
+            <button type="button" class="btn-continue" onclick="nextStep(2)">Continue</button>
+        </div>
+
+        <!-- Step 2: General Information -->
+        <div id="step2" class="step">
+            <div class="form-group">
+                <label for="name">Name</label>
                 <input type="text" id="name" placeholder="Enter your name" required>
             </div>
             <div class="form-group">
-                <label for="birthdate" id="label-date-of-birth">Date of birth</label>
+                <label for="birthdate">Date of birth</label>
                 <input type="date" id="birthdate" required>
             </div>
             <div class="form-group">
-                <label for="city" id="label-city">Your city</label>
+                <label for="city">Your city</label>
                 <input type="text" id="city" placeholder="Enter your city" required>
             </div>
             <div class="form-group">
-                <label id="label-gender">Gender</label>
+                <label>Gender</label>
                 <div class="gender-group">
                     <input type="radio" id="male" name="gender" value="Male" required>
-                    <label for="male" id="label-male">Male</label>
+                    <label for="male">Male</label>
                     <input type="radio" id="female" name="gender" value="Female">
-                    <label for="female" id="label-female">Female</label>
+                    <label for="female">Female</label>
                 </div>
             </div>
-            <button type="button" class="btn-continue" id="button-continue" onclick="nextStep(2)">Continue</button>
+            <button type="button" class="btn-continue" onclick="nextStep(3)">Continue</button>
         </div>
 
-        <!-- Step 2: Social Media Links -->
-        <div id="step2" class="step">
+        <!-- Step 3: Social Media Links -->
+        <div id="step3" class="step">
             <div class="form-group">
-                <label for="instagram" id="label-instagram">Instagram</label>
+                <label for="instagram">Instagram</label>
                 <input type="text" id="instagram" placeholder="instagram.com/">
             </div>
             <div class="form-group">
-                <label for="onlyfans" id="label-onlyfans">OnlyFans</label>
+                <label for="onlyfans">OnlyFans</label>
                 <input type="text" id="onlyfans" placeholder="onlyfans.com/">
             </div>
             <div class="form-group">
-                <label for="twitter" id="label-twitter">Twitter</label>
+                <label for="twitter">Twitter</label>
                 <input type="text" id="twitter" placeholder="twitter.com/">
             </div>
-            <button type="button" class="btn-continue" id="button-continue-step2" onclick="nextStep(3)">Continue</button>
+            <button type="button" class="btn-continue" onclick="nextStep(4)">Continue</button>
         </div>
 
-        <!-- Step 3: Add Photos -->
-        <div id="step3" class="step">
-            <h1 id="add-photos-title">Add Profile Photos</h1>
-            <p id="add-photos-instruction" style="color: #888;">You must add 3 photos to continue.</p>
+        <!-- Step 4: Add Photos -->
+        <div id="step4" class="step">
+            <h1>Add Profile Photos</h1>
+            <p style="color: #888;">You must add 3 photos to continue.</p>
             <div class="photo-grid">
                 <label class="photo-upload">
                     <span>+</span>
@@ -93,55 +193,78 @@
                     <input type="file" accept="image/*" onchange="handleFileUpload(this)">
                 </label>
             </div>
-            <button type="button" class="btn-continue" id="button-submit" onclick="submitForm()">Continue</button>
+            <button type="button" class="btn-continue" onclick="submitForm()">Submit</button>
         </div>
     </form>
 
     <script>
-        let currentLanguage = 'en';
-        const translations = {};
+        let currentStep = 1;
 
-        async function loadTranslations(lang) {
-            try {
-                const response = await fetch(`translations/${lang}.json`);
-                translations[lang] = await response.json();
-                applyTranslations(lang);
-            } catch (error) {
-                console.error("Error loading translations:", error);
+        function nextStep(step) {
+            const activeStep = document.querySelector('.step.active');
+            if (activeStep) {
+                activeStep.classList.remove('active');
+                activeStep.style.display = 'none';
             }
-        }
 
-        function applyTranslations(lang) {
-            document.getElementById('title').textContent = translations[lang].title;
-            document.getElementById('label-name').textContent = translations[lang].name;
-            document.getElementById('label-date-of-birth').textContent = translations[lang].date_of_birth;
-            document.getElementById('label-city').textContent = translations[lang].city;
-            document.getElementById('label-gender').textContent = translations[lang].gender;
-            document.getElementById('label-male').textContent = translations[lang].male;
-            document.getElementById('label-female').textContent = translations[lang].female;
-            document.getElementById('button-continue').textContent = translations[lang].submit;
-            document.getElementById('label-instagram').textContent = translations[lang].instagram;
-            document.getElementById('label-onlyfans').textContent = translations[lang].onlyfans;
-            document.getElementById('label-twitter').textContent = translations[lang].twitter;
-            document.getElementById('button-continue-step2').textContent = translations[lang].submit;
-            document.getElementById('add-photos-title').textContent = translations[lang].add_profile_photos;
-            document.getElementById('add-photos-instruction').textContent = translations[lang].add_photos_instruction;
-            document.getElementById('button-submit').textContent = translations[lang].submit;
-            document.getElementById('choose-language-label').textContent = translations[lang].choose_language;
-        }
-
-        function changeLanguage() {
-            const selectedLanguage = document.getElementById('language-select').value;
-            currentLanguage = selectedLanguage;
-            if (translations[selectedLanguage]) {
-                applyTranslations(selectedLanguage);
+            const nextStep = document.getElementById('step' + step);
+            if (nextStep) {
+                nextStep.classList.add('active');
+                nextStep.style.display = 'block';
+                updateProgress(step);
+                updateStepTitle(step);
             } else {
-                loadTranslations(selectedLanguage);
+                console.error('Next step not found: ', step);
             }
         }
 
-        // Load default language
-        loadTranslations(currentLanguage);
+        function updateProgress(step) {
+            const totalSteps = 4;
+            const progress = (step / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateStepTitle(step) {
+            const titles = {
+                1: 'Select Language',
+                2: 'General Information',
+                3: 'Social Media Links',
+                4: 'Add Photos'
+            };
+            document.getElementById('step-title').textContent = titles[step];
+        }
+
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    input.parentElement.style.backgroundImage = `url(${e.target.result})`;
+                    input.parentElement.style.backgroundSize = 'cover';
+                    input.parentElement.style.backgroundPosition = 'center';
+                    input.parentElement.querySelector('span').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitForm() {
+            const formData = {
+                name: document.getElementById('name').value,
+                birthdate: document.getElementById('birthdate').value,
+                city: document.getElementById('city').value,
+                gender: document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '',
+                instagram: document.getElementById('instagram') ? document.getElementById('instagram').value : '',
+                onlyfans: document.getElementById('onlyfans') ? document.getElementById('onlyfans').value : '',
+                twitter: document.getElementById('twitter') ? document.getElementById('twitter').value : ''
+            };
+
+            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+                Telegram.WebApp.sendData(JSON.stringify(formData));
+            } else {
+                alert('Telegram WebApp is not available. Please open this page through Telegram.');
+            }
+        }
     </script>
 </body>
 </html>
