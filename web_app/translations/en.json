@@ -1,0 +1,13 @@
+{
+  "title": "Create Profile",
+  "name": "Name",
+  "age": "Age",
+  "gender": "Gender",
+  "city": "Your city",
+  "submit": "Continue",
+  "about_you": "About you",
+  "date_of_birth": "Date of birth",
+  "choose_language": "Choose Language",
+  "male": "Male",
+  "female": "Female"
+}

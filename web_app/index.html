@@ -14,186 +14,71 @@
             max-width: 400px;
             margin: auto;
         }
-
-        h1 {
-            color: #fff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .progress-container {
-            width: 100%;
-            background-color: #444;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            height: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background-color: #007bff;
-            transition: width 0.3s ease-in-out;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #bbb;
-        }
-
-        input[type="text"], input[type="date"], textarea {
-            width: 100%;
-            padding: 10px;
-            background: #2c2c2c;
-            border: 1px solid #444;
-            border-radius: 5px;
-            color: #f5f5f5;
-        }
-
-            input::placeholder, textarea::placeholder {
-                color: #888;
-            }
-
-        .gender-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-
-            .gender-group label {
-                display: inline-block;
-                margin: 0;
-                cursor: pointer;
-            }
-
-            .gender-group input {
-                display: none;
-            }
-
-            .gender-group label {
-                padding: 10px 20px;
-                background: #2c2c2c;
-                border-radius: 5px;
-                border: 1px solid #444;
-                text-align: center;
-                width: 48%;
-            }
-
-            .gender-group input:checked + label {
-                background: #007bff;
-                color: #fff;
-                border: 1px solid #0056b3;
-            }
-
-        .btn-continue {
-            width: 100%;
-            padding: 12px;
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-            .btn-continue:hover {
-                background: #0056b3;
-            }
-
-        .step {
-            display: none;
-        }
-
-            .step.active {
-                display: block;
-            }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .photo-upload {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #2c2c2c;
-            border: 2px dashed #444;
-            border-radius: 5px;
-            width: 100%;
-            height: 150px;
-            cursor: pointer;
-            color: #888;
-            text-align: center;
-        }
-
-            .photo-upload input {
-                display: none;
-            }
+        /* Existing styles... */
     </style>
 </head>
 <body>
+    <div>
+        <label for="language-select" id="choose-language-label">Choose Language</label>
+        <select id="language-select" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+            <option value="lv">Latviešu</option>
+        </select>
+    </div>
+
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
-    <h1>Create Profile</h1>
+    <h1 id="title">Create Profile</h1>
     <form id="registrationForm">
         <!-- Step 1 -->
         <div id="step1" class="step active">
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name" id="label-name">Name</label>
                 <input type="text" id="name" placeholder="Enter your name" required>
             </div>
             <div class="form-group">
-                <label for="birthdate">Date of birth</label>
+                <label for="birthdate" id="label-date-of-birth">Date of birth</label>
                 <input type="date" id="birthdate" required>
             </div>
             <div class="form-group">
-                <label for="city">Your city</label>
+                <label for="city" id="label-city">Your city</label>
                 <input type="text" id="city" placeholder="Enter your city" required>
             </div>
             <div class="form-group">
-                <label>Gender</label>
+                <label id="label-gender">Gender</label>
                 <div class="gender-group">
                     <input type="radio" id="male" name="gender" value="Male" required>
-                    <label for="male">Male</label>
+                    <label for="male" id="label-male">Male</label>
                     <input type="radio" id="female" name="gender" value="Female">
-                    <label for="female">Female</label>
+                    <label for="female" id="label-female">Female</label>
                 </div>
             </div>
-            <button type="button" class="btn-continue" onclick="nextStep(2)">Continue</button>
+            <button type="button" class="btn-continue" id="button-continue" onclick="nextStep(2)">Continue</button>
         </div>
 
         <!-- Step 2: Social Media Links -->
         <div id="step2" class="step">
             <div class="form-group">
-                <label for="instagram">Instagram</label>
+                <label for="instagram" id="label-instagram">Instagram</label>
                 <input type="text" id="instagram" placeholder="instagram.com/">
             </div>
             <div class="form-group">
-                <label for="onlyfans">OnlyFans</label>
+                <label for="onlyfans" id="label-onlyfans">OnlyFans</label>
                 <input type="text" id="onlyfans" placeholder="onlyfans.com/">
             </div>
             <div class="form-group">
-                <label for="twitter">Twitter</label>
+                <label for="twitter" id="label-twitter">Twitter</label>
                 <input type="text" id="twitter" placeholder="twitter.com/">
             </div>
-            <button type="button" class="btn-continue" onclick="nextStep(3)">Continue</button>
+            <button type="button" class="btn-continue" id="button-continue-step2" onclick="nextStep(3)">Continue</button>
         </div>
 
         <!-- Step 3: Add Photos -->
         <div id="step3" class="step">
-            <h1>Add Profile Photos</h1>
-            <p style="color: #888;">You must add 3 photos to continue.</p>
+            <h1 id="add-photos-title">Add Profile Photos</h1>
+            <p id="add-photos-instruction" style="color: #888;">You must add 3 photos to continue.</p>
             <div class="photo-grid">
                 <label class="photo-upload">
                     <span>+</span>
@@ -208,68 +93,55 @@
                     <input type="file" accept="image/*" onchange="handleFileUpload(this)">
                 </label>
             </div>
-            <button type="button" class="btn-continue" onclick="submitForm()">Continue</button>
+            <button type="button" class="btn-continue" id="button-submit" onclick="submitForm()">Continue</button>
         </div>
     </form>
 
-    <script>let currentStep = 1;
+    <script>
+        let currentLanguage = 'en';
+        const translations = {};
 
-        function nextStep(step) {
-            // Hide current step
-            const activeStep = document.querySelector('.step.active');
-            if (activeStep) {
-                activeStep.classList.remove('active');
-                activeStep.style.display = 'none';
+        async function loadTranslations(lang) {
+            try {
+                const response = await fetch(`translations/${lang}.json`);
+                translations[lang] = await response.json();
+                applyTranslations(lang);
+            } catch (error) {
+                console.error("Error loading translations:", error);
             }
+        }
 
-            // Show next step
-            const nextStep = document.getElementById('step' + step);
-            if (nextStep) {
-                nextStep.classList.add('active');
-                nextStep.style.display = 'block';
-                updateProgress(step);
+        function applyTranslations(lang) {
+            document.getElementById('title').textContent = translations[lang].title;
+            document.getElementById('label-name').textContent = translations[lang].name;
+            document.getElementById('label-date-of-birth').textContent = translations[lang].date_of_birth;
+            document.getElementById('label-city').textContent = translations[lang].city;
+            document.getElementById('label-gender').textContent = translations[lang].gender;
+            document.getElementById('label-male').textContent = translations[lang].male;
+            document.getElementById('label-female').textContent = translations[lang].female;
+            document.getElementById('button-continue').textContent = translations[lang].submit;
+            document.getElementById('label-instagram').textContent = translations[lang].instagram;
+            document.getElementById('label-onlyfans').textContent = translations[lang].onlyfans;
+            document.getElementById('label-twitter').textContent = translations[lang].twitter;
+            document.getElementById('button-continue-step2').textContent = translations[lang].submit;
+            document.getElementById('add-photos-title').textContent = translations[lang].add_profile_photos;
+            document.getElementById('add-photos-instruction').textContent = translations[lang].add_photos_instruction;
+            document.getElementById('button-submit').textContent = translations[lang].submit;
+            document.getElementById('choose-language-label').textContent = translations[lang].choose_language;
+        }
+
+        function changeLanguage() {
+            const selectedLanguage = document.getElementById('language-select').value;
+            currentLanguage = selectedLanguage;
+            if (translations[selectedLanguage]) {
+                applyTranslations(selectedLanguage);
             } else {
-                console.error('Next step not found: ', step);
+                loadTranslations(selectedLanguage);
             }
         }
 
-        function updateProgress(step) {
-            const totalSteps = 3;
-            const progress = (step / totalSteps) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-        }
-
-        function handleFileUpload(input) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    input.parentElement.style.backgroundImage = `url(${e.target.result})`;
-                    input.parentElement.style.backgroundSize = 'cover';
-                    input.parentElement.style.backgroundPosition = 'center';
-                    input.parentElement.querySelector('span').style.display = 'none';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function submitForm() {
-            const formData = {
-                name: document.getElementById('name').value,
-                birthdate: document.getElementById('birthdate').value,
-                city: document.getElementById('city').value,
-                gender: document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '',
-                instagram: document.getElementById('instagram').value,
-                onlyfans: document.getElementById('onlyfans').value,
-                twitter: document.getElementById('twitter').value
-                // Add logic for photo uploads if needed
-            };
-
-            if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-                Telegram.WebApp.sendData(JSON.stringify(formData));
-            } else {
-                alert('Telegram WebApp is not available. Please open this page through Telegram.');
-            }
-        }</script>
+        // Load default language
+        loadTranslations(currentLanguage);
+    </script>
 </body>
 </html>

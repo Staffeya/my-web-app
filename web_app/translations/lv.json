@@ -1,0 +1,13 @@
+﻿{
+  "title": "Izveidot profilu",
+  "name": "Vārds",
+  "age": "Vecums",
+  "gender": "Dzimums",
+  "city": "Jūsu pilsēta",
+  "submit": "Turpināt",
+  "about_you": "Par sevi",
+  "date_of_birth": "Dzimšanas datums",
+  "choose_language": "Izvēlieties valodu",
+  "male": "Vīrietis",
+  "female": "Sieviete"
+}
