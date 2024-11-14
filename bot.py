@@ -1,26 +1,10 @@
 ﻿from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 import json
-import sqlite3
+from database import init_db, save_user_data  # Импортируем функции из database.py
 
-def save_user_data(user_data):
-    conn = sqlite3.connect('user_data.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            age TEXT,
-            gender TEXT,
-            interests TEXT,
-            about TEXT
-        )
-    ''')
-    cursor.execute('''
-        INSERT INTO users (name, age, gender, interests, about) VALUES (?, ?, ?, ?, ?)
-    ''', (user_data['name'], user_data['age'], user_data['gender'], user_data['interests'], user_data['about']))
-    conn.commit()
-    conn.close()
+# Инициализация базы данных при запуске бота
+init_db()
 
 BOT_TOKEN = "7652159161:AAE9-ubBxk5diNfOPABEvUJZxRa-Zysq_kg"
 
@@ -36,6 +20,9 @@ async def handle_webapp_data(update: Update, context: ContextTypes.DEFAULT_TYPE)
     try:
         data = update.effective_message.web_app_data.data
         user_data = json.loads(data)
+
+        # Сохранение данных в базу данных
+        save_user_data(user_data)
 
         # Пример обработки данных
         name = user_data.get('name', 'Unknown')
@@ -53,8 +40,6 @@ async def handle_webapp_data(update: Update, context: ContextTypes.DEFAULT_TYPE)
             f"Interests: {interests}\n"
             f"About: {about}"
         )
-
-        # Здесь вы можете сохранить данные в базу данных или выполнить другие действия
 
     except (json.JSONDecodeError, KeyError) as e:
         await update.message.reply_text("An error occurred while processing your data. Please try again.")
