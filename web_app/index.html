@@ -143,7 +143,7 @@
             <button type="button" class="btn-continue" onclick="nextStep(3)">Continue</button>
         </div>
 
-        <!-- Step 3: Social Media Links -->
+        <!-- Step 3: Social Media Links (Optional) -->
         <div id="step3" class="step">
             <div class="form-group">
                 <label for="instagram" id="instagram-label">Instagram</label>
@@ -258,6 +258,17 @@
                 }
                 if (!gender) {
                     document.getElementById('gender-error').textContent = 'Please select your gender.';
+                    valid = false;
+                }
+            }
+
+            // Step 4 validations (Add Photos)
+            if (step === 4) {
+                const photoInputs = document.querySelectorAll('.photo-upload input[type="file"]');
+                const validFiles = Array.from(photoInputs).every(input => input.files.length > 0);
+
+                if (!validFiles) {
+                    alert("Please upload all 3 photos.");
                     valid = false;
                 }
             }
