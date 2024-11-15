@@ -6,86 +6,45 @@
     <title>Welcome to Registration</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #1b1b1b;
-            font-family: 'Poppins', sans-serif;
-            color: #f5f5f5;
-        }
-
-        .loading-screen {
-            text-align: center;
-        }
-
-        .spinner {
-            margin: 20px auto;
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            border-top: 5px solid #007bff;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        p {
-            font-size: 16px;
-            color: #f5f5f5;
-        }
+        /* Ваши стили */
     </style>
-    <!-- Подключение библиотек i18next -->
     <script src="https://unpkg.com/i18next@latest/i18next.min.js"></script>
     <script src="https://unpkg.com/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
     <script src="https://unpkg.com/i18next-http-backend/i18nextHttpBackend.min.js"></script>
     <script>
-        // Инициализация i18next
-        i18next
-            .use(i18nextBrowserLanguageDetector) // Использование определения языка браузера
-            .use(i18nextHttpBackend) // Загрузка переводов через HTTP
-            .init({
-                fallbackLng: 'en', // Язык по умолчанию
-                debug: true,
-                backend: {
-                    loadPath: './translations/{{lng}}.json' // Путь к вашим JSON-файлам с переводами
-                }
-            }, function(err, t) {
-                if (err) {
-                    console.error('Ошибка инициализации i18next:', err);
-                }
-                updateContent(); // Обновление контента на основе выбранного языка
+        document.addEventListener('DOMContentLoaded', () => {
+            i18next
+                .use(i18nextHttpBackend)
+                .use(i18nextBrowserLanguageDetector)
+                .init({
+                    debug: true,
+                    fallbackLng: 'en',
+                    backend: {
+                        loadPath: './locales/{{lng}}.json'
+                    }
+                }, (err, t) => {
+                    if (err) return console.error(err);
+                    // Функция для обновления текста
+                    updateContent();
+                });
+
+            function updateContent() {
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    el.textContent = i18next.t(el.getAttribute('data-i18n'));
+                });
+            }
+
+            // Переключение языка (дополнительно)
+            document.getElementById('language-select')?.addEventListener('change', (event) => {
+                i18next.changeLanguage(event.target.value, updateContent);
             });
-
-        // Функция для обновления текста на странице
-        function updateContent() {
-            document.querySelector('p').textContent = i18next.t('redirect-message'); // Пример перевода текста
-        }
-
-        // Перенаправление на первую страницу регистрации с небольшой задержкой
-        window.onload = function () {
-            setTimeout(function () {
-                window.location.href = './pages/step1.html';
-            }, 2000); // Задержка 2 секунды
-        };
+        });
     </script>
 </head>
 <body>
     <div class="loading-screen">
         <div class="spinner"></div>
-        <p>Redirecting to the registration page...</p> <!-- Это будет переведено -->
+        <p data-i18n="welcome">Redirecting to the registration page...</p>
     </div>
 </body>
 </html>
