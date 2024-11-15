@@ -47,46 +47,19 @@
             color: #f5f5f5;
         }
     </style>
-    <script src="https://unpkg.com/i18next@latest/i18next.min.js"></script>
-    <script src="https://unpkg.com/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
-    <script src="https://unpkg.com/i18next-http-backend/i18nextHttpBackend.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            i18next
-                .use(i18nextHttpBackend)
-                .use(i18nextBrowserLanguageDetector)
-                .init({
-                    debug: true,
-                    fallbackLng: 'en',
-                    backend: {
-                        loadPath: './locales/{{lng}}.json' // путь к JSON-файлам с переводами
-                    }
-                }, (err, t) => {
-                    if (err) {
-                        console.error('Ошибка инициализации i18next:', err);
-                        return;
-                    }
-                    // Функция для обновления текста на основе текущего языка
-                    updateContent();
-                });
-
-            function updateContent() {
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    el.textContent = i18next.t(el.getAttribute('data-i18n'));
-                });
-            }
-
-            // Обработчик для смены языка
-            document.getElementById('language-select')?.addEventListener('change', (event) => {
-                i18next.changeLanguage(event.target.value, updateContent);
-            });
-        });
+        // Simple redirection logic without language detection/translation
+        window.onload = function () {
+            setTimeout(function () {
+                window.location.href = './pages/step1.html';
+            }, 2000); // Delay of 2 seconds before redirecting
+        };
     </script>
 </head>
 <body>
     <div class="loading-screen">
         <div class="spinner"></div>
-        <p data-i18n="welcome">Redirecting to the registration page...</p>
+        <p>Redirecting to the registration page...</p> <!-- Plain English text -->
     </div>
 </body>
 </html>

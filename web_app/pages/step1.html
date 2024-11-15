@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step 1 - Age Confirmation & Language Selection</title>
+    <title>Step 1 - Age Confirmation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -30,7 +30,7 @@
             color: #bbb;
         }
 
-        select, button {
+        button {
             width: 100%;
             padding: 10px;
             background: #2c2c2c;
@@ -54,44 +54,26 @@
     <script>
         function proceedToNextStep() {
             const ageConfirmed = document.getElementById('age-confirmation').checked;
-            const languageSelected = document.getElementById('language-select').value;
 
             if (!ageConfirmed) {
-                alert('Вы должны подтвердить, что вам больше 18 лет.');
+                alert('You must confirm that you are 18 or older.');
                 return;
             }
 
-            if (!languageSelected) {
-                alert('Пожалуйста, выберите язык.');
-                return;
-            }
-
-            // Сохраняем выбранный язык (можно использовать для дальнейшего перевода страниц)
-            localStorage.setItem('selectedLanguage', languageSelected);
-
-            // Переход к следующему шагу
+            // Proceed to the next step
             window.location.href = './step2.html';
         }
     </script>
 </head>
 <body>
-    <h1>Добро пожаловать!</h1>
-    <h2>Этот сервис предназначен только для лиц 18+</h2>
+    <h1>Welcome!</h1>
+    <h2>This service is for 18+ only</h2>
     <div class="form-group">
         <label class="warning-text">
             <input type="checkbox" id="age-confirmation">
-            Я подтверждаю, что мне исполнилось 18 лет.
+            I confirm that I am 18 years old or older.
         </label>
     </div>
-    <div class="form-group">
-        <label for="language-select">Выберите язык:</label>
-        <select id="language-select">
-            <option value="">Выберите язык</option>
-            <option value="en">English</option>
-            <option value="ru">Русский</option>
-            <option value="lv">Latviešu</option>
-        </select>
-    </div>
-    <button type="button" onclick="proceedToNextStep()">Продолжить</button>
+    <button type="button" onclick="proceedToNextStep()">Continue</button>
 </body>
 </html>

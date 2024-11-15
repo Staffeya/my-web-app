@@ -67,7 +67,8 @@
                 background: #333;
             }
     </style>
-    <script>function proceedToNextStep() {
+    <script>
+        function proceedToNextStep() {
             const socialData = {
                 instagram: document.getElementById('instagram').value.trim(),
                 twitter: document.getElementById('twitter').value.trim(),
@@ -75,18 +76,19 @@
                 telegram: document.getElementById('telegram').value.trim()
             };
 
-            // Сохраняем данные в localStorage и переходим к следующему шагу
+            // Save data to localStorage and proceed to the next step
             localStorage.setItem('socialData', JSON.stringify(socialData));
             window.location.href = './step4.html';
         }
 
         function skipStep() {
-            // Переход к следующему шагу без сохранения данных
+            // Proceed to the next step without saving data
             window.location.href = './step4.html';
-        }</script>
+        }
+    </script>
 </head>
 <body>
-    <h1>Добавьте свои соцсети (по желанию)</h1>
+    <h1>Add Your Social Media (Optional)</h1>
     <form id="socialForm">
         <div class="form-group">
             <label for="instagram">Instagram</label>
@@ -105,8 +107,8 @@
             <input type="text" id="telegram" placeholder="t.me/yourusername">
         </div>
         <div class="btn-group">
-            <button type="button" class="btn" onclick="proceedToNextStep()">Продолжить</button>
-            <button type="button" class="btn btn-skip" onclick="skipStep()">Пропустить</button>
+            <button type="button" class="btn" onclick="proceedToNextStep()">Continue</button>
+            <button type="button" class="btn btn-skip" onclick="skipStep()">Skip</button>
         </div>
     </form>
 </body>

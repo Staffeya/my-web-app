@@ -77,7 +77,8 @@
                 background: #0056b3;
             }
     </style>
-    <script>let selectedGender = null;
+    <script>
+        let selectedGender = null;
         let selectedAge = null;
 
         function selectGender(gender) {
@@ -99,27 +100,28 @@
             const city = document.getElementById('city').value.trim();
 
             if (!name || !city || !selectedAge || !selectedGender) {
-                alert('Пожалуйста, заполните все поля перед продолжением.');
+                alert('Please fill out all fields before continuing.');
                 return;
             }
 
-            // Сохранение данных и переход к следующему шагу
+            // Save data and proceed to the next step
             localStorage.setItem('registrationData', JSON.stringify({ name, city, age: selectedAge, gender: selectedGender }));
             window.location.href = './step3.html';
-        }</script>
+        }
+    </script>
 </head>
 <body>
-    <h1>Базовая регистрация</h1>
+    <h1>Basic Registration</h1>
     <div class="form-group">
-        <label for="name">Имя</label>
-        <input type="text" id="name" placeholder="Введите ваше имя" required>
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
     </div>
     <div class="form-group">
-        <label for="city">Город</label>
-        <input type="text" id="city" placeholder="Введите ваш город" required>
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter your city" required>
     </div>
     <div class="form-group">
-        <label>Возраст</label>
+        <label>Age</label>
         <div class="button-group">
             <button type="button" class="age-button" id="age-18-25" onclick="selectAge('18-25')">18-25</button>
             <button type="button" class="age-button" id="age-26-35" onclick="selectAge('26-35')">26-35</button>
@@ -128,12 +130,12 @@
         </div>
     </div>
     <div class="form-group">
-        <label>Пол</label>
+        <label>Gender</label>
         <div class="button-group">
-            <button type="button" class="gender-button" id="gender-male" onclick="selectGender('Мужской')">Мужской</button>
-            <button type="button" class="gender-button" id="gender-female" onclick="selectGender('Женский')">Женский</button>
+            <button type="button" class="gender-button" id="gender-male" onclick="selectGender('Male')">Male</button>
+            <button type="button" class="gender-button" id="gender-female" onclick="selectGender('Female')">Female</button>
         </div>
     </div>
-    <button type="button" class="btn-continue" onclick="proceedToNextStep()">Продолжить</button>
+    <button type="button" class="btn-continue" onclick="proceedToNextStep()">Continue</button>
 </body>
 </html>
