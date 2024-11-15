@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 3 - Add Social Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1b1b1b;
+            color: #f5f5f5;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #bbb;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            background: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: #f5f5f5;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 48%;
+            padding: 12px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+            .btn:hover {
+                background: #0056b3;
+            }
+
+        .btn-skip {
+            background: #555;
+        }
+
+            .btn-skip:hover {
+                background: #333;
+            }
+    </style>
+    <script>function proceedToNextStep() {
+            const socialData = {
+                instagram: document.getElementById('instagram').value.trim(),
+                twitter: document.getElementById('twitter').value.trim(),
+                onlyfans: document.getElementById('onlyfans').value.trim(),
+                telegram: document.getElementById('telegram').value.trim()
+            };
+
+            // Сохраняем данные в localStorage и переходим к следующему шагу
+            localStorage.setItem('socialData', JSON.stringify(socialData));
+            window.location.href = './step4.html';
+        }
+
+        function skipStep() {
+            // Переход к следующему шагу без сохранения данных
+            window.location.href = './step4.html';
+        }</script>
+</head>
+<body>
+    <h1>Добавьте свои соцсети (по желанию)</h1>
+    <form id="socialForm">
+        <div class="form-group">
+            <label for="instagram">Instagram</label>
+            <input type="text" id="instagram" placeholder="instagram.com/yourusername">
+        </div>
+        <div class="form-group">
+            <label for="twitter">Twitter</label>
+            <input type="text" id="twitter" placeholder="twitter.com/yourusername">
+        </div>
+        <div class="form-group">
+            <label for="onlyfans">OnlyFans</label>
+            <input type="text" id="onlyfans" placeholder="onlyfans.com/yourusername">
+        </div>
+        <div class="form-group">
+            <label for="telegram">Telegram</label>
+            <input type="text" id="telegram" placeholder="t.me/yourusername">
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn" onclick="proceedToNextStep()">Продолжить</button>
+            <button type="button" class="btn btn-skip" onclick="skipStep()">Пропустить</button>
+        </div>
+    </form>
+</body>
+</html>

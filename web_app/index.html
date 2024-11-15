@@ -3,253 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Registration Form</title>
+    <title>Welcome to Registration</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #1b1b1b;
-            color: #f5f5f5;
-            padding: 20px;
-            max-width: 400px;
-            margin: auto;
-        }
-
-        h1 {
-            color: #fff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .progress-container {
-            width: 100%;
-            background-color: #444;
-            border-radius: 10px;
-            height: 10px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background-color: #007bff;
-            transition: width 0.3s ease-in-out;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #bbb;
-        }
-
-        input[type="text"], input[type="date"], select, textarea, input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            background: #2c2c2c;
-            border: 1px solid #444;
-            border-radius: 5px;
-            color: #f5f5f5;
-        }
-
-            input::placeholder, textarea::placeholder {
-                color: #888;
-            }
-
-        .btn-continue {
-            width: 100%;
-            padding: 12px;
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-            .btn-continue:hover {
-                background: #0056b3;
-            }
-
-        .step {
-            display: none;
-        }
-
-            .step.active {
-                display: block;
-            }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .photo-upload {
+            margin: 0;
+            padding: 0;
             display: flex;
-            align-items: center;
             justify-content: center;
-            background: #2c2c2c;
-            border: 2px dashed #444;
-            border-radius: 5px;
-            width: 100%;
-            height: 150px;
-            cursor: pointer;
-            color: #888;
+            align-items: center;
+            height: 100vh;
+            background-color: #1b1b1b;
+            font-family: 'Poppins', sans-serif;
+            color: #f5f5f5;
+        }
+
+        .loading-screen {
             text-align: center;
         }
 
-            .photo-upload input {
-                display: none;
+        .spinner {
+            margin: 20px auto;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
             }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        p {
+            font-size: 16px;
+            color: #f5f5f5;
+        }
     </style>
+    <script>
+        // Перенаправление на первую страницу регистрации с небольшой задержкой
+        window.onload = function () {
+            setTimeout(function () {
+                window.location.href = './pages/step1.html';
+            }, 2000); // Задержка 2 секунды
+        };
+    </script>
 </head>
 <body>
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
+    <div class="loading-screen">
+        <div class="spinner"></div>
+        <p>Redirecting to the registration page...</p>
     </div>
-
-    <h1 id="step-title">Select Language</h1>
-    <form id="registrationForm">
-        <!-- Step 1: Select Language -->
-        <div id="step1" class="step active">
-            <div class="form-group">
-                <label for="language-select">Choose Language</label>
-                <select id="language-select">
-                    <option value="en">English</option>
-                    <option value="ru">Русский</option>
-                    <option value="lv">Latviešu</option>
-                </select>
-            </div>
-            <button type="button" class="btn-continue" onclick="nextStep(2)">Continue</button>
-        </div>
-
-        <!-- Step 2: Age Confirmation -->
-        <div id="step2" class="step">
-            <div class="form-group">
-                <label>Are you 18 or older?</label>
-                <input type="checkbox" id="age-confirm" required>
-                <label for="age-confirm">Yes, I am 18 or older.</label>
-            </div>
-            <button type="button" class="btn-continue" onclick="nextStep(3)">Continue</button>
-        </div>
-
-        <!-- Step 3: General Information -->
-        <div id="step3" class="step">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" placeholder="Enter your name" required>
-            </div>
-            <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" id="city" placeholder="Enter your city" required>
-            </div>
-            <div class="form-group">
-                <label for="birthdate">Date of Birth</label>
-                <input type="date" id="birthdate" required>
-            </div>
-            <button type="button" class="btn-continue" onclick="nextStep(4)">Continue</button>
-        </div>
-
-        <!-- Step 4: Social Media Links -->
-        <div id="step4" class="step">
-            <div class="form-group">
-                <label for="instagram">Instagram</label>
-                <input type="text" id="instagram" placeholder="instagram.com/">
-            </div>
-            <div class="form-group">
-                <label for="twitter">Twitter</label>
-                <input type="text" id="twitter" placeholder="twitter.com/">
-            </div>
-            <button type="button" class="btn-continue" onclick="nextStep(5)">Continue</button>
-        </div>
-
-        <!-- Step 5: Add Photos -->
-        <div id="step5" class="step">
-            <h1>Add Profile Photos</h1>
-            <p style="color: #888;">You must add 3 photos to continue.</p>
-            <div class="photo-grid">
-                <label class="photo-upload">
-                    <span>+</span>
-                    <input type="file" accept="image/*" onchange="handleFileUpload(this)" required>
-                </label>
-                <label class="photo-upload">
-                    <span>+</span>
-                    <input type="file" accept="image/*" onchange="handleFileUpload(this)" required>
-                </label>
-                <label class="photo-upload">
-                    <span>+</span>
-                    <input type="file" accept="image/*" onchange="handleFileUpload(this)" required>
-                </label>
-            </div>
-            <button type="button" class="btn-continue" onclick="submitForm()">Submit</button>
-        </div>
-    </form>
-
-    <script>
-        let currentStep = 1;
-
-        function nextStep(step) {
-            if (step === 3 && !validateStep2()) {
-                alert('You must confirm you are 18 or older.');
-                return;
-            }
-
-            if (step === 5 && !validateStep5()) {
-                alert('Please add 3 photos before proceeding.');
-                return;
-            }
-
-            const activeStep = document.querySelector('.step.active');
-            if (activeStep) {
-                activeStep.classList.remove('active');
-            }
-
-            const nextStep = document.getElementById('step' + step);
-            if (nextStep) {
-                nextStep.classList.add('active');
-                updateProgress(step);
-            }
-        }
-
-        function validateStep2() {
-            return document.getElementById('age-confirm').checked;
-        }
-
-        function validateStep5() {
-            const photoInputs = document.querySelectorAll('.photo-upload input[type="file"]');
-            return Array.from(photoInputs).every(input => input.files.length > 0);
-        }
-
-        function updateProgress(step) {
-            const totalSteps = 5;
-            const progress = (step / totalSteps) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-        }
-
-        function handleFileUpload(input) {
-            if (input.files && input.files.length > 0) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    input.parentElement.style.backgroundImage = `url(${e.target.result})`;
-                    input.parentElement.style.backgroundSize = 'cover';
-                    input.parentElement.style.backgroundPosition = 'center';
-                    input.parentElement.querySelector('span').style.display = 'none';
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function submitForm() {
-            // Form submission logic
-            alert('Form submitted!');
-        }
-    </script>
 </body>
 </html>
