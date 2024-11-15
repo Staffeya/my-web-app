@@ -221,6 +221,9 @@
                 nextStep.classList.add('active');
                 nextStep.style.display = 'block';
                 updateProgress(step);
+                updateStepTitle(step);
+            } else {
+                console.error('Next step not found: ', step);
             }
         }
 
