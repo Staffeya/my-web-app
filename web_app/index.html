@@ -199,79 +199,17 @@
     <script>
         let currentStep = 1;
 
-        const translations = {
-            en: {
-                'step-title': 'Select Language',
-                'language-label': 'Choose Language',
-                'name-label': 'Name',
-                'birthdate-label': 'Date of Birth',
-                'city-label': 'City',
-                'gender-label': 'Gender',
-                'male-label': 'Male',
-                'female-label': 'Female',
-                'instagram-label': 'Instagram',
-                'onlyfans-label': 'OnlyFans',
-                'twitter-label': 'Twitter',
-                'add-photos-title': 'Add Profile Photos',
-                'add-photos-description': 'You must add 3 photos to continue.',
-            },
-            ru: {
-                'step-title': 'Выберите язык',
-                'language-label': 'Выберите язык',
-                'name-label': 'Имя',
-                'birthdate-label': 'Дата рождения',
-                'city-label': 'Город',
-                'gender-label': 'Пол',
-                'male-label': 'Мужской',
-                'female-label': 'Женский',
-                'instagram-label': 'Instagram',
-                'onlyfans-label': 'OnlyFans',
-                'twitter-label': 'Twitter',
-                'add-photos-title': 'Добавьте фотографии профиля',
-                'add-photos-description': 'Вы должны добавить 3 фотографии, чтобы продолжить.',
-            },
-            lv: {
-                'step-title': 'Izvēlieties valodu',
-                'language-label': 'Izvēlieties valodu',
-                'name-label': 'Vārds',
-                'birthdate-label': 'Dzimšanas datums',
-                'city-label': 'Pilsēta',
-                'gender-label': 'Dzimums',
-                'male-label': 'Vīrietis',
-                'female-label': 'Sieviete',
-                'instagram-label': 'Instagram',
-                'onlyfans-label': 'OnlyFans',
-                'twitter-label': 'Twitter',
-                'add-photos-title': 'Pievienojiet profila fotoattēlus',
-                'add-photos-description': 'Lai turpinātu, jāpieņem 3 fotoattēli.',
-            }
-        };
-
-        let currentLanguage = 'en';
-
-        function changeLanguage() {
-            const selectedLanguage = document.getElementById('language-select').value;
-            currentLanguage = selectedLanguage;
-            applyTranslations(currentLanguage);
-        }
-
-        function applyTranslations(lang) {
-            document.getElementById('step-title').textContent = translations[lang]['step-title'];
-            document.getElementById('language-label').textContent = translations[lang]['language-label'];
-            document.getElementById('name-label').textContent = translations[lang]['name-label'];
-            document.getElementById('birthdate-label').textContent = translations[lang]['birthdate-label'];
-            document.getElementById('city-label').textContent = translations[lang]['city-label'];
-            document.getElementById('gender-label').textContent = translations[lang]['gender-label'];
-            document.getElementById('male-label').textContent = translations[lang]['male-label'];
-            document.getElementById('female-label').textContent = translations[lang]['female-label'];
-            document.getElementById('instagram-label').textContent = translations[lang]['instagram-label'];
-            document.getElementById('onlyfans-label').textContent = translations[lang]['onlyfans-label'];
-            document.getElementById('twitter-label').textContent = translations[lang]['twitter-label'];
-            document.getElementById('add-photos-title').textContent = translations[lang]['add-photos-title'];
-            document.getElementById('add-photos-description').textContent = translations[lang]['add-photos-description'];
-        }
-
         function nextStep(step) {
+            if (step === 2 && !validateStep2()) {
+                alert('Please fill out all required fields before proceeding.');
+                return;
+            }
+
+            if (step === 4 && !validateStep4()) {
+                alert('Please add 3 photos before proceeding.');
+                return;
+            }
+
             const activeStep = document.querySelector('.step.active');
             if (activeStep) {
                 activeStep.classList.remove('active');
@@ -283,26 +221,27 @@
                 nextStep.classList.add('active');
                 nextStep.style.display = 'block';
                 updateProgress(step);
-                updateStepTitle(step);
-            } else {
-                console.error('Next step not found: ', step);
             }
         }
 
-        function updateProgress(step) {
-            const totalSteps = 4;
-            const progress = (step / totalSteps) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
+        function validateStep2() {
+            const name = document.getElementById('name').value.trim();
+            const birthdate = document.getElementById('birthdate').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const gender = document.querySelector('input[name="gender"]:checked');
+
+            return name && birthdate && city && gender;
         }
 
-        function updateStepTitle(step) {
-            const titles = {
-                1: 'Select Language',
-                2: 'General Information',
-                3: 'Social Media Links',
-                4: 'Add Photos'
-            };
-            document.getElementById('step-title').textContent = titles[step];
+        function validateStep4() {
+            const photoInputs = document.querySelectorAll('.photo-upload input[type="file"]');
+            let filledPhotos = 0;
+            photoInputs.forEach(input => {
+                if (input.files && input.files.length > 0) {
+                    filledPhotos++;
+                }
+            });
+            return filledPhotos >= 3;
         }
 
         function handleFileUpload(input) {
@@ -336,11 +275,6 @@
                 alert('Telegram WebApp is not available. Please open this page through Telegram.');
             }
         }
-
-        // Initial load of translations for the default language
-        applyTranslations(currentLanguage);
     </script>
 </body>
 </html>
-
-
