@@ -47,7 +47,33 @@
             color: #f5f5f5;
         }
     </style>
+    <!-- Подключение библиотек i18next -->
+    <script src="https://unpkg.com/i18next@latest/i18next.min.js"></script>
+    <script src="https://unpkg.com/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="https://unpkg.com/i18next-http-backend/i18nextHttpBackend.min.js"></script>
     <script>
+        // Инициализация i18next
+        i18next
+            .use(i18nextBrowserLanguageDetector) // Использование определения языка браузера
+            .use(i18nextHttpBackend) // Загрузка переводов через HTTP
+            .init({
+                fallbackLng: 'en', // Язык по умолчанию
+                debug: true,
+                backend: {
+                    loadPath: './translations/{{lng}}.json' // Путь к вашим JSON-файлам с переводами
+                }
+            }, function(err, t) {
+                if (err) {
+                    console.error('Ошибка инициализации i18next:', err);
+                }
+                updateContent(); // Обновление контента на основе выбранного языка
+            });
+
+        // Функция для обновления текста на странице
+        function updateContent() {
+            document.querySelector('p').textContent = i18next.t('redirect-message'); // Пример перевода текста
+        }
+
         // Перенаправление на первую страницу регистрации с небольшой задержкой
         window.onload = function () {
             setTimeout(function () {
@@ -59,7 +85,7 @@
 <body>
     <div class="loading-screen">
         <div class="spinner"></div>
-        <p>Redirecting to the registration page...</p>
+        <p>Redirecting to the registration page...</p> <!-- Это будет переведено -->
     </div>
 </body>
 </html>
