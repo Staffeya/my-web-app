@@ -112,7 +112,6 @@
     </style>
 </head>
 <body>
-    <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
@@ -182,15 +181,15 @@
             <div class="photo-grid">
                 <label class="photo-upload">
                     <span>+</span>
-                    <input type="file" accept="image/*" onchange="handleFileUpload(this)">
+                    <input type="file" accept="image/*" onchange="handleFileUpload(this)" required>
                 </label>
                 <label class="photo-upload">
                     <span>+</span>
-                    <input type="file" accept="image/*" onchange="handleFileUpload(this)">
+                    <input type="file" accept="image/*" onchange="handleFileUpload(this)" required>
                 </label>
                 <label class="photo-upload">
                     <span>+</span>
-                    <input type="file" accept="image/*" onchange="handleFileUpload(this)">
+                    <input type="file" accept="image/*" onchange="handleFileUpload(this)" required>
                 </label>
             </div>
             <button type="button" class="btn-continue" onclick="submitForm()">Submit</button>
@@ -343,7 +342,5 @@
     </script>
 </body>
 </html>
-
-
 
 
