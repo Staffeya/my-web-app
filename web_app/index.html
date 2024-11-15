@@ -6,7 +6,46 @@
     <title>Welcome to Registration</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Ваши стили */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1b1b1b;
+            font-family: 'Poppins', sans-serif;
+            color: #f5f5f5;
+        }
+
+        .loading-screen {
+            text-align: center;
+        }
+
+        .spinner {
+            margin: 20px auto;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        p {
+            font-size: 16px;
+            color: #f5f5f5;
+        }
     </style>
     <script src="https://unpkg.com/i18next@latest/i18next.min.js"></script>
     <script src="https://unpkg.com/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
@@ -20,11 +59,14 @@
                     debug: true,
                     fallbackLng: 'en',
                     backend: {
-                        loadPath: './locales/{{lng}}.json'
+                        loadPath: './locales/{{lng}}.json' // путь к JSON-файлам с переводами
                     }
                 }, (err, t) => {
-                    if (err) return console.error(err);
-                    // Функция для обновления текста
+                    if (err) {
+                        console.error('Ошибка инициализации i18next:', err);
+                        return;
+                    }
+                    // Функция для обновления текста на основе текущего языка
                     updateContent();
                 });
 
@@ -34,7 +76,7 @@
                 });
             }
 
-            // Переключение языка (дополнительно)
+            // Обработчик для смены языка
             document.getElementById('language-select')?.addEventListener('change', (event) => {
                 i18next.changeLanguage(event.target.value, updateContent);
             });
